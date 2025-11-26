@@ -1,6 +1,7 @@
 # Cyberpunk 2077: Context-Aware Generative Texting
 
 This project creates a bridge between **Cyberpunk 2077's internal game state** (Redscript engine) and **Large Language Models** (LLMs). While standard generative mods allow for generic conversation, this system injects real-time, high-fidelity context—Quest Objectives, Police Heat Levels, and Weather Conditions—into the LLM's system prompt, allowing companions to react dynamically to the player's immediate reality.
+(all the images use OpenAI API)
 
 
 ## The Difference: Context Matters
