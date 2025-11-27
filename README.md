@@ -40,7 +40,7 @@ Using a custom **Polling Monitor Pattern** (to bypass native API limitations), t
 
 Companions will comment on visibility or toxicity, but not every time it sprinkles:
   - Light Rain: 25% Chance to comment.
-  - Heavy Storms / Acid Rain: 75% Chance to comment (High Priority).
+  - Heavy Storms: 75% Chance to comment (High Priority).
 
 
 ## Under the Hood: Prompt Engineering
