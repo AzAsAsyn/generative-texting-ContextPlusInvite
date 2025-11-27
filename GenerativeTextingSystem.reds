@@ -53,6 +53,7 @@ public class GenerativeTextingSystem extends ScriptableService {
     @runtimeProperty("ModSettings.description", "Controls the LLM powering the character.")
     @runtimeProperty("ModSettings.displayValues.StableHorde", "Stable Horde")
     @runtimeProperty("ModSettings.displayValues.OpenAI", "ChatGPT")
+    @runtimeProperty("ModSettings.displayValues.OpenRouter", "OpenRouter")
     public let aiModel: LLMProvider = LLMProvider.StableHorde;
 
     @runtimeProperty("ModSettings.mod", "Generative Texting")

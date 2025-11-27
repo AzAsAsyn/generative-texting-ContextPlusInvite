@@ -7,6 +7,16 @@ public func GetOpenAiApiKey() -> String {
     return "0000000000";
 }
 
+// Replace this with your own API key from OpenRouter https://openrouter.ai/ 
+public func GetOpenRouterApiKey() -> String {
+    return "0000000000";
+}
+
+// Replace this with your desired model at https://openrouter.ai/ 
+public func GetOpenRouterModel() -> String {
+    return "x-ai/grok-4.1-fast:free";
+}
+
 // Get the character's full display name
 public func GetCharacterLocalizedName(character: CharacterSetting) -> String{
     switch character {
@@ -200,7 +210,8 @@ enum PlayerGender {
 
 enum LLMProvider {
     StableHorde = 0,
-    OpenAI = 1
+    OpenAI = 1,
+    OpenRouter = 2
 }
 
 enum PlayerLanguage {

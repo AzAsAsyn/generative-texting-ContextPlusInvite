@@ -51,7 +51,39 @@ public class HttpRequestSystem extends ScriptableSystem {
       case LLMProvider.OpenAI:
         this.OpenAiPostRequest(playerMessage);
         break;
+      case LLMProvider.OpenRouter:    
+        this.OpenRouterPostRequest(playerMessage);
+        break;
     }
+  }
+
+  //OperRouter Post Request
+  private func OpenRouterPostRequest(playerMessage: String) {
+
+    let apiKey = GetOpenRouterApiKey(); 
+
+    if Equals(apiKey, "0000000000") || StrLen(apiKey) < 10 {
+      ConsoleLog("OpenRouter API key not set.");
+      this.HandleMessage("[SYSTEM ERROR: Please enter a valid OpenRouter Key in Mod Settings]");
+      return;
+    }
+
+    let requestDTO = this.BuildOpenRouterMessages(playerMessage);
+    let jsonRequest = ToJson(requestDTO);
+    
+    let callback = HttpCallback.Create(this, n"OnOpenAIResponse");
+
+    let headers: array<HttpHeader> = [
+        HttpHeader.Create("Content-Type", "application/json"),
+        HttpHeader.Create("Authorization", "Bearer " + apiKey),
+        HttpHeader.Create("HTTP-Referer", "https://github.com/Hugana/generative-texting-context-aware/tree/main"), 
+        HttpHeader.Create("X-Title", "Cyberpunk GenText Mod")
+    ];
+
+    AsyncHttpClient.Post(callback, "https://openrouter.ai/api/v1/chat/completions", jsonRequest.ToString(), headers);
+    
+    ConsoleLog("== OpenRouter POST Request ==");
+    this.ToggleIsGenerating(true);
   }
 
   // Stable Horde Post Request
@@ -64,7 +96,7 @@ public class HttpRequestSystem extends ScriptableSystem {
     let headers: array<HttpHeader> = [
         HttpHeader.Create("Content-Type", "application/json"),
         HttpHeader.Create("accept", "application/json"),
-        HttpHeader.Create("apikey", GetApiKey()),
+        HttpHeader.Create("apikey", GetOpenRouterApiKey()),
         HttpHeader.Create("Client-Agent", "unknown:0:unknown")
     ];
     
@@ -460,6 +492,27 @@ public class HttpRequestSystem extends ScriptableSystem {
 
     requestDTO.params = paramsDTO;
 
+    return requestDTO;
+  }
+
+   private func BuildOpenRouterMessages(playerMessage: String) -> ref<OpenAIRequestDTO> {
+    let requestDTO = new OpenAIRequestDTO();
+  
+    requestDTO.model = GetOpenRouterModel(); 
+    
+    let messagesArray: array<ref<OpenAIMessageDTO>>;
+
+    let systemMessage = new OpenAIMessageDTO();
+    systemMessage.role = "system";
+    systemMessage.content = this.GetSystemPrompt(); 
+    ArrayPush(messagesArray, systemMessage);
+
+    let userMessage = new OpenAIMessageDTO();
+    userMessage.role = "user";
+    userMessage.content = this.GeneratePrompt(playerMessage);
+    ArrayPush(messagesArray, userMessage);
+
+    requestDTO.messages = messagesArray;
     return requestDTO;
   }
 
