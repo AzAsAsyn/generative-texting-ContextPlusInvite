@@ -22,6 +22,13 @@ The system hooks into the `PreventionSystem` to detect changes in police pursuit
 | :---: | :---: |
 | ![Heat Level 1](Images/PoliceEventHeatLvl1.png)<br>_Casual warning about minor trouble._ | ![Heat Level 5](Images/PoliceEventHeatLvl5.png)<br>_Urgent, high-stakes reaction._ |
 
+To prevent annoyance during minor accidental crimes, the companion's reaction chance scales with the threat level:
+  - ★ (1 Star)	20%	Low probability. Minor trouble is often ignored.
+  - ★★ (2 Stars)	40%	Moderate probability.
+  - ★★★ (3 Stars)	70%	High probability. The situation is getting serious.
+  - ★★★★ (4 Stars)	90%	Very High probability.
+  - ★★★★★ (5 Stars)	100%	Guaranteed Reaction. MaxTac is involved; the situation is critical.
+
 
 ### 2. Environmental Awareness (Weather Monitor)
 Using a custom **Polling Monitor Pattern** (to bypass native API limitations), the system tracks changes in `worldRainIntensity`.
@@ -30,6 +37,10 @@ Using a custom **Polling Monitor Pattern** (to bypass native API limitations), t
 
 ![Weather Event](Images/WeatherEventMessage.png)
 <br>Companion reacting to a sudden weather shift.<br>
+
+Companions will comment on visibility or toxicity, but not every time it sprinkles:
+  - Light Rain: 25% Chance to comment.
+  - Heavy Storms / Acid Rain: 75% Chance to comment (High Priority).
 
 
 ## Under the Hood: Prompt Engineering
